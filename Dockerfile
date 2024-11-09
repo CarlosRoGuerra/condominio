@@ -1,33 +1,32 @@
-# Use uma imagem Python oficial
-FROM python:3.9-slim
+FROM python:3.12-slim
 
-# Define variáveis de ambiente
-ENV PYTHONDONTWRITEBYTECODE=1
-ENV PYTHONUNBUFFERED=1
-
-# Define o diretório de trabalho
 WORKDIR /app
 
 # Instala as dependências do sistema
-RUN apt-get update && apt-get install -y \
-    build-essential \
-    python3-dev \
-    libpq-dev \
+RUN apt-get update && \
+    apt-get install -y \
+        gcc \
+        python3-dev \
+        libpq-dev \
     && rm -rf /var/lib/apt/lists/*
 
-# Copia o requirements.txt
+# Copia requirements e instala dependências
 COPY requirements.txt .
+RUN pip install --no-cache-dir --upgrade pip && \
+    pip install --no-cache-dir -r requirements.txt
 
-# Cria e ativa o ambiente virtual, instala as dependências
-RUN python -m venv /opt/venv
-ENV PATH="/opt/venv/bin:$PATH"
-RUN pip install --upgrade pip && pip install -r requirements.txt
-
-# Copia o resto do código
+# Copia o projeto
 COPY . .
 
-# Coleta arquivos estáticos e executa migrações
+# Variáveis de ambiente
+ENV PYTHONUNBUFFERED=1 \
+    PYTHONDONTWRITEBYTECODE=1
+
+# Coleta arquivos estáticos
 RUN python manage.py collectstatic --noinput
 
-# Configura o comando para iniciar a aplicação
-CMD ["gunicorn", "--bind", "0.0.0.0:8000", "Condominio.wsgi:application"]
+# Expõe a porta
+EXPOSE 8000
+
+# Comando para iniciar
+CMD ["gunicorn", "--bind", "0.0.0.0:8000", "--workers", "2", "your_project.wsgi:application"]
