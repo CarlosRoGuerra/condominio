@@ -25,7 +25,8 @@ SECRET_KEY = 'django-insecure-2=$pd3@q54z*rsf3*@fi+5@zhha4+41hbuprbr@462!@9t4wu3
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['erp.tisalotti.com.br', 'http://erp.tisalotti.com.br']
+ALLOWED_HOSTS = ['*']
+CSRF_TRUSTED_ORIGINS = ['https://*.up.railway.app']
 
 AUTH_USER_MODEL = 'autenticacao.User'
 LOGIN_REDIRECT_URL = '/'
@@ -140,5 +141,5 @@ STATIC_URL = 'static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
-
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
