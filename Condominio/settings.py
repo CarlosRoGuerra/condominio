@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-2=$pd3@q54z*rsf3*@fi+5@zhha4+41hbuprbr@462!@9t4wu3
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['Condominio.railway.app', '127.0.0.1', 'localhost']
 CSRF_TRUSTED_ORIGINS = ['https://*.up.railway.app']
 
 AUTH_USER_MODEL = 'autenticacao.User'
