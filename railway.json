@@ -1,10 +1,10 @@
 {
     "build": {
-        "builder": "nixpacks",
-        "buildCommand": "pip install -r requirements.txt"
+        "builder": "DOCKERFILE",
+        "dockerfile": "Dockerfile"
     },
     "deploy": {
-        "startCommand": "python manage.py migrate && python manage.py collectstatic --noinput && gunicorn your_project.wsgi",
+        "startCommand": null,
         "restartPolicyType": "ON_FAILURE"
     }
 }
