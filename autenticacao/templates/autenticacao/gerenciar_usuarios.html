@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  {% load static %}
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gerenciamento de Usuários</title>
+  <!-- Link para o CSS do Bootstrap -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <!-- Link para os ícones do Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- CSS personalizado -->
+  <style>
+    body {
+      font-family: 'Roboto', sans-serif;
+      background-color: #f0f2f5;
+    }
+
+    /* Ajustes no navbar */
+    .navbar {
+      background-color: #343a40;
+    }
+
+    .navbar-brand {
+      color: white;
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    .navbar-brand:hover {
+      color: #ddd;
+    }
+
+    .nav-link {
+      color: white !important;
+      font-weight: 500;
+      padding: 10px;
+      transition: transform 0.3s, color 0.3s;
+    }
+
+    .nav-link:hover {
+      color: #ddd !important;
+      transform: scale(1.1);
+    }
+
+    /* Botão adicionar */
+    .btn-add {
+      display: inline-block;
+      padding: 12px 24px;
+      background-color: #28a745;
+      color: white;
+      text-decoration: none;
+      border-radius: 50px;
+      transition: background-color 0.3s, transform 0.3s;
+      margin-top: 20px;
+      font-weight: bold;
+    }
+
+    .btn-add:hover {
+      background-color: #218838;
+      transform: translateY(-3px);
+    }
+
+    .btn-add i {
+      margin-right: 8px;
+    }
+
+    /* Animação de aparecer */
+    .table-row {
+      animation: fadeIn 0.8s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      0% {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Tabela */
+    main {
+      padding: 20px;
+    }
+
+    .table-responsive {
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background-color: white;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    th, td {
+      padding: 15px;
+      text-align: left;
+      border-bottom: 1px solid #dee2e6;
+    }
+
+    th {
+      background-color: #343a40;
+      color: white;
+    }
+
+    tr:nth-child(even) {
+      background-color: #f8f9fa;
+    }
+
+    /* Ações */
+    .action-icons a {
+      color: #343a40;
+      margin-right: 10px;
+      transition: color 0.3s, transform 0.3s;
+    }
+
+    .action-icons a:hover {
+      color: #007bff;
+      transform: scale(1.2);
+    }
+
+    .action-icons a:last-child {
+      margin-right: 0;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar com ícones individuais -->
+  <nav class="navbar navbar-expand-lg">
+    <a class="navbar-brand" href="#">Gerenciamento de Usuários</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarMenu" aria-controls="navbarMenu" aria-expanded="false" aria-label="Alternar navegação">
+      <span class="navbar-toggler-icon"><i class="fas fa-bars" style="color: white;"></i></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarMenu">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="#" onclick="alert('Funcionalidade em desenvolvimento')" title="Adicionar Morador">
+            <i class="fas fa-user-plus"></i>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#" onclick="alert('Funcionalidade em desenvolvimento')" title="Registrar Veículo">
+            <i class="fas fa-car"></i>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#" onclick="alert('Funcionalidade em desenvolvimento')" title="Registrar Encomenda">
+            <i class="fas fa-box"></i>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#" onclick="alert('Funcionalidade em desenvolvimento')" title="Visita Técnica">
+            <i class="fas fa-wrench"></i>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#" onclick="alert('Funcionalidade em desenvolvimento')" title="Agendamento Médico para Piscina">
+            <i class="fas fa-calendar-check"></i>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#" onclick="alert('Funcionalidade em desenvolvimento')" title="Visitantes">
+            <i class="fas fa-user-friends"></i>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#" onclick="alert('Funcionalidade em desenvolvimento')" title="Pagamentos">
+            <i class="fas fa-money-bill-wave"></i>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  <main>
+    <div class="table-responsive">
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Nome</th>
+            <th>Cargo</th>
+            <th>CPF</th>
+            <th>Telefone</th>
+            <th>Ações</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for funcionario in funcionarios %}
+          <tr class="table-row">
+            <td>{{ funcionario.id_porteiro }}</td>
+            <td>{{ funcionario.nome_completo }}</td>
+            <td>{{ funcionario.cargo }}</td>
+            <td>{{ funcionario.cpf }}</td>
+            <td>{{ funcionario.telefone }}</td>
+            <td class="action-icons">
+              <a href="#" onclick="viewDetails('{{ funcionario.id_porteiro }}')" title="Detalhes">
+                <i class="fas fa-eye"></i>
+              </a>
+              <a href="#" onclick="editUser('{{ funcionario.id_porteiro }}')" title="Editar">
+                <i class="fas fa-edit"></i>
+              </a>
+              <a href="#" onclick="deleteUser('{{ funcionario.id_porteiro }}')" title="Excluir">
+                <i class="fas fa-trash-alt"></i>
+              </a>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
+    <a href="{% url 'adicionar_funcionario' %}" class="btn-add">
+      <i class="fas fa-user-plus"></i> Cadastrar Novo Funcionário
+    </a>
+  </main>
+
+  <!-- Scripts do Bootstrap e jQuery -->
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <!-- Script personalizado -->
+  <script>
+    function viewDetails(userId) {
+      alert(`Exibindo detalhes do usuário com ID ${userId}`);
+    }
+
+    function editUser(userId) {
+      alert(`Editando usuário com ID ${userId}`);
+    }
+
+    function deleteUser(userId) {
+      if (confirm(`Tem certeza que deseja excluir o usuário com ID ${userId}?`)) {
+        alert(`Excluindo usuário com ID ${userId}`);
+      }
+    }
+  </script>
+</body>
+</html>

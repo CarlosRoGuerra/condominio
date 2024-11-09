@@ -1,0 +1,136 @@
+<!-- autenticacao/templates/autenticacao/login.html -->
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <!-- Link para o CSS do Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- CSS personalizado -->
+    <style>
+        body {
+            background: linear-gradient(135deg, #71b7e6, #9b59b6);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .login-container {
+            background: #fff;
+            padding: 40px 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            animation: fadeInDown 1s;
+            width: 100%;
+            max-width: 400px;
+        }
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .login-container h2 {
+            margin-bottom: 30px;
+            text-align: center;
+            color: #333;
+        }
+        .login-container .form-control {
+            margin-bottom: 20px;
+        }
+        .login-container .btn {
+            width: 100%;
+            padding: 10px;
+        }
+        .login-container p {
+            margin-top: 20px;
+            text-align: center;
+        }
+        .login-container p a {
+            color: #9b59b6;
+            text-decoration: none;
+        }
+        .login-container p a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <h2>Login</h2>
+        
+        <!-- Exibição de mensagens de erro ou sucesso -->
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Fechar">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            {% endfor %}
+        {% endif %}
+
+        <form method="post" id="loginForm">
+            {% csrf_token %}
+            <!-- Campos individuais para melhor controle -->
+            <div class="form-group">
+                <label for="id_username">Usuário:</label>
+                {{ form.username }}
+            </div>
+            <div class="form-group">
+                <label for="id_password">Senha:</label>
+                {{ form.password }}
+            </div>
+            <button type="submit" class="btn btn-primary">Entrar</button>
+        </form>
+        <p>Não possui uma conta? <a href="{% url 'register' %}">Registre-se aqui</a></p>
+    </div>
+
+    <!-- Scripts do Bootstrap e jQuery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <!-- Script de validação de formulário -->
+    <script>
+        $(document).ready(function(){
+            $('#loginForm').on('submit', function(e){
+                var valid = true;
+                var username = $('#id_username').val().trim();
+                var password = $('#id_password').val().trim();
+
+                if(username === '') {
+                    valid = false;
+                    $('#id_username').addClass('is-invalid');
+                } else {
+                    $('#id_username').removeClass('is-invalid');
+                }
+
+                if(password === '') {
+                    valid = false;
+                    $('#id_password').addClass('is-invalid');
+                } else {
+                    $('#id_password').removeClass('is-invalid');
+                }
+
+                if(!valid) {
+                    e.preventDefault();
+                    // Exibe mensagem de erro
+                    $('.alert').remove();
+                    $('.login-container').prepend(`
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            Por favor, preencha todos os campos obrigatórios.
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Fechar">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    `);
+                }
+            });
+        });
+    </script>
+</body>
+</html>

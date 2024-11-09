@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard</title>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+    <style>
+      .sidebar {
+        background-color: #343a40;
+        color: #fff;
+        height: 100vh;
+        padding: 1rem;
+      }
+
+      .sidebar a {
+        color: #fff;
+        text-decoration: none;
+      }
+
+      .sidebar a:hover {
+        background-color: #495057;
+      }
+
+      .profile-picture {
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        background-color: #6c757d;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 1.2rem;
+        font-weight: bold;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="d-flex">
+      <!-- Sidebar -->
+      <div class="sidebar">
+        <div class="d-flex align-items-center mb-4">
+          <div class="profile-picture mr-3">JD</div>
+          <span>John Doe</span>
+        </div>
+        <nav>
+          <ul class="nav flex-column">
+            <li class="nav-item">
+              <a class="nav-link" href="#">Dashboard</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'gerenciar_usuarios' %}">Gerenciamento de Usuários (CRUD)</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'filtros_residencia' %}'">Filtros por Residência</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'vincular_residencias' %}'">Vinculação de Residências</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'historico_mudancas' %}'">Histórico de Mudanças</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'consulta_encomenda' %}'">Consulta de Encomenda</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'controle_inquilinos'%}'">Controle de Inquilinos</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="'{% url 'controle_acesso' %}'">Controle de Acesso e Permissões</a>
+            </li>
+          </ul>
+        </nav>
+        <button class="btn btn-light btn-block mt-4">Logout</button>
+      </div>
+
+      <!-- Main Content -->
+    <div class="container-fluid p-4" id="main-content">
+      <h1>Bem-vindo ao Dashboard</h1>
+      {% block content %}
+      {% endblock %}
+    </div>
+  </div>
+
+  <script>
+    function loadContent(url) {
+      fetch(url)
+        .then(response => response.text())
+        .then(data => {
+          const mainContent = document.getElementById('main-content');
+          mainContent.innerHTML = data;
+        })
+        .catch(error => {
+          console.error('Erro ao carregar o conteúdo:', error);
+        });
+    }
+  </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+"""""""""""""""""""""""
+
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    {% load static %}
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}" />
+  </head>
+  <body>
+    <header>
+      <h1>Bem-vindo ao Dashboard</h1>
+      <p>Usuário: {{ user.email }}</p>
+      <a href="{% url 'logout' %}">Logout</a>
+    </header>
+
+    <main>
+      <section>
+        <h2>Opções de Gerenciamento</h2>
+        <div class="dashboard-buttons">
+          <!-- Botões para cada funcionalidade -->
+          <button onclick="window.location.href='{% url 'dashboard_gerenciamento' %}'">Painel de Controle</button>
+          <button onclick="window.location.href='{% url 'gerenciar_usuarios' %}'">Gerenciamento de Usuários (CRUD)</button>
+          <button onclick="window.location.href='{% url 'filtros_residencia' %}'">Filtros por Residência</button>
+          <button onclick="window.location.href='{% url 'vincular_residencias' %}'">Vinculação de Residências</button>
+          <button onclick="window.location.href='{% url 'historico_mudancas' %}'">Histórico de Mudanças</button>
+          <button onclick="window.location.href='{% url 'consulta_encomenda' %}'">Consulta de Encomenda</button>
+          <button onclick="window.location.href='{% url 'controle_inquilinos' %}'">Controle de Inquilinos</button>
+          <button onclick="window.location.href='{% url 'controle_acesso' %}'">Controle de Acesso e Permissões</button>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>
+"
