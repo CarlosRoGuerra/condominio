@@ -1,0 +1,11 @@
+[
+build
+]
+builder = "nixpacks"
+buildCommand = "python -m pip install -r requirements.txt"
+
+[
+deploy
+]
+startCommand = "gunicorn condominio.wsgi:application"
+restartPolicyType = "ON_FAILURE"
